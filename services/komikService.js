@@ -41,3 +41,31 @@ async function getKomikById(database, id) {
   return komik;
 }
 // Kode selanjutnya tidak terlihat dalam sumber yang diberikan.
+
+async function updateKomik(database, id, komikData) {
+  const komik = await database.Komik.findByPk(id);
+  if (!komik) {
+    throw new Error(`Komik dengan ID ${id} tidak ditemukan`);
+  }
+  
+  await komik.update(komikData);
+  return komik;
+}
+
+async function deleteKomik(database, id) {
+  const komik = await database.Komik.findByPk(id);
+  if (!komik) {
+    throw new Error(`Komik dengan ID ${id} tidak ditemukan`);
+  }
+  
+  await komik.destroy();
+  return { message: `Komik dengan ID ${id} berhasil dihapus` };
+}
+
+module.exports = {
+  createKomik,
+  getAllKomik,
+  getKomikById,
+  updateKomik,
+  deleteKomik,
+};
